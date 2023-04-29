@@ -19,7 +19,7 @@ const topicSchema = new mongoose.Schema({
   },
   rateValue: {
       type: Number, //find a way to calculate rating as an average of (rating1 + rating2 +...)/# of ratings
-      required: true,
+      required: false,
       min: 1,
       max: 5
   },
@@ -89,6 +89,11 @@ const UserSchema = new mongoose.Schema({
     topics: {
         type: [topicSchema],
         default: []
+    },
+    admin: {
+      type: Boolean,
+      required: true,
+      default: false
     },
     offerHelp: {
         type: Boolean,
