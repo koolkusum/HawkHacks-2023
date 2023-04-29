@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {getUser} from '../api';
+import {getUsers} from '../api';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import './Style.css';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -10,13 +10,13 @@ function Login() {
     const handleLogin = async (e) => {
       e.preventDefault();
       try {
-        const response = await getUser(email,password);//if response status code
+        const response = await getUsers(email,password);//if response status code
         sessionStorage.setItem('email', email);
         sessionStorage.setItem('password', password);
 
         if (response.status===200)
         {
-          nav('/TaskPlanner');
+          nav('/StudentPage');
         }
         //console.log(response); // do something with the user data, like redirect to a new page
       } catch (error) {

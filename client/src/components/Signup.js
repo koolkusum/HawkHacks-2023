@@ -1,40 +1,43 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {createUser} from '../api';
-
-async function Signup(){
-    const [name, setName] = useState('');
-    const [email, setEmail]= useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const nav = useNavigate();
-
-    const handleSubmit =async(event) =>{
-        if (password !== confirmPassword) {
-            console.log('Passwords do not match');
-            return;
-          }
-    
-    try{
-        const user = {name, email, password};
-        sessionStorage.setItem ('email',email);
-        sessionStorage.setItem('password',password);
-        const response = await createUser(user);
-        if (response.status===200)
-        {
-            nav('/StudentPage')
-        }
+import { createUser} from '../api';
+import { useNavigate } from 'react-router-dom';
+import './Style.css';
+function Signup() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const nav = useNavigate();
+  const resets = sessionStorage.setItem('resets', 0)
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      console.log('Passwords do not match');
+      return;
     }
-    catch(error){
+    try {
+      const user = { name, email, password };
+      sessionStorage.setItem('email', email);
+      sessionStorage.setItem('password', password);
 
-    }
-    }
+      const response = await createUser(user);
+      if (response.status===200)
+      {
 
-return(
-    <div className = "Signup">
-        <h1>Sign up</h1>
-        <form onSubmit={handleSubmit}>
+        nav('/TaskPlanner');
+      }
+      console.log(response);
+      // code to redirect the user to their dashboard goes here
+    } catch (error) {
+      // code to display an error message to the user goes here
+    }
+  };
+
+  return (
+    <div className="Signup">
+    <h1>Sign Up</h1> 
+    <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label htmlFor="name">Name:</label>
         <input
@@ -89,6 +92,7 @@ return(
       </div>
     </form>
     </div>
-);
+  );
 }
+
 export default Signup;
