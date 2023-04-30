@@ -72,7 +72,7 @@ app.put('/users/initializeCourse/:email/:password', async(req,res) => {
     user.courses.push(course);
     await user.save();
     res.status(200).json(user);
-})
+});
 
 app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     const {email, password} = req.params;
