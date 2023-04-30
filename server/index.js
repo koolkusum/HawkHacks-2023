@@ -97,30 +97,29 @@ app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     const topic2 = {
         name: "Linked-Lists",
         unlocked: false,
-        date: '09/20/2023 12:00 AM'
+        date: 'September 20, 2023 12:00:00 AM'
     }
     const topic3 = {
         name: "Stacks and Queues",
         unlocked: false,
-        date: '09/25/2023 1 2:00 AM'
+        date: 'September 25, 2023 12:00:00 AM'
     }
     const topic4 = {
         name: "Hashmap and Hashset",
         unlocked: false,
-        date: '09/27/2023 12:00 AM'
+        date: 'September 27, 2023 12:00:00 AM'
     }
     const topic5 = {
         name: "Trees",
         unlocked: false,
-        date: '10/02/2023 12:00 AM'
+        date: 'October 2, 2023 12:00:00 AM'
     }
     const topic6 = {
         name: "Searching/Sorting Algorithms",
         unlocked: false,
-        date: '10/04/2023 12:00 AM'
+        date: 'October 4, 2023 12:00:00 AM'
     }
-    user.courses[0].topics.push(topic1,topic2,topic3,topic4,topic5,topic6);
-    //user.topics.push(topic1,topic2,topic3,topic4, topic5, topic6);
+    user.topics.push(topic1,topic2,topic3,topic4,topic5,topic6);
     await user.save()
     res.status(200).json(user);
 });
@@ -135,7 +134,7 @@ app.put("/users/unlockTopic/:email/:password", async(req,res) => {
     }
     for (let i = 0; i < user.topics.length; i++)
     {
-        let thisTopic = user.courses[0].topics[i];
+        let thisTopic = user.topics[i];
         if (checkDate(thisTopic.date) === true)
         {
             thisTopic.unlocked = true;
@@ -188,7 +187,7 @@ app.get("/users/getTopics/:email/:password", async (req, res) => {
     if (!user) {
         return res.status(404).json({message: 'User not found'});
     }
-    const topics = user.courses[0].topics;
+    const topics = user.topics;
     res.status(200).json(topics);
 });
 
