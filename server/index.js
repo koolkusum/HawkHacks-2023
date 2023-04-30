@@ -43,37 +43,43 @@ app.get("/users/getUsers", (req, res) => {
 );
 
 app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,res) => {
-    const {email, password, courseid} = req.params;
+    const {email, password} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user)
     {
         return res.status(404).json({message: 'User not found'});
     }
-    if (courseid == "8113")
-    {
+    //if (courseid == "8113")
+    //{
         const topic1 = {
             name: "Arrays",
-            unlocked:true
+            unlocked:true,
+            date: '09/18/2023 12:00 AM'
         }
         const topic2 = {
             name: "Linked-Lists",
-            unlocked: false
+            unlocked: false,
+            date: '09/20/2023 12:00 AM'
         }
         const topic3 = {
             name: "Stacks and Queues",
-            unlocked: false
+            unlocked: false,
+            date: '09/25/2023 12:00 AM'
         }
         const topic4 = {
             name: "Hashmap and Hashset",
-            unlocked: false
+            unlocked: false,
+            date: '09/27/2023 12:00 AM'
         }
         const topic5 = {
             name: "Trees",
-            unlocked: false
+            unlocked: false,
+            date: '10/02/2023 12:00 AM'
         }
         const topic6 = {
             name: "Searching/Sorting Algorithms",
-            unlocked: false
+            unlocked: false,
+            date: '10/04/2023 12:00 AM'
         }
         const course = {
             name: "Data Structures",
@@ -81,7 +87,7 @@ app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,re
             topics: [topic1, topic2, topic3, topic4, topic5, topic6],
             courseid: 8113
         }
-    }
+    //}
     user.courses.push(course);
     user.topics.push(topic1,topic2,topic3,topic4, topic5, topic6);
     await(user.save);
@@ -136,7 +142,6 @@ app.get("/users/getCourseID/:email/:password", async (req, res) => {
     const courseid = user.courses.courseid;
     res.status(200).json(courseid);
 });
-
 
 app.get("/users/getCourse/:email/:password", async (req, res) => {
     const {email, password} = req.params;
