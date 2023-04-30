@@ -47,10 +47,7 @@ const courseSchema = new mongoose.Schema({
         minlength: 1,
         maxlength: 40
     },
-    // topics: {
-    //     type: [topicSchema],
-    //     default: []
-    // },
+
     courseRating: {
         type: Number, //average of (topic1rating + topic2rating + ....) / # of topics
         required: true,

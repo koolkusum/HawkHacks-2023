@@ -144,7 +144,13 @@ app.put("/users/unlockTopic/:email/:password", async(req,res) => {
         }
         return res.status(404).json({message: 'Topic not found'});
 });
-
+app.put("/users/getUpdateRatings/:email/:password/:rateTopic/:rateValue",async (req,res)=>{
+    const {email, password} = req.params;
+    const user = await UserModel.findOne({email, password}).exec();
+    if (!user) {
+        return res.status(404).json({message: 'User not found'});
+    }
+});
 // app.put("/users/rateTopic/:email/:password/:rateValue", async (req, res) => {
 //     const {email, password} = req.params;
 //     const user = await UserModel.findOne({email, password}).exec();

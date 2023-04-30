@@ -29,3 +29,7 @@ export const initializeCourse = async (email, password)=>
     const response = await axios.put(`${API_URL}/users/initializeCourse/${email}/${password}`);
     return response;
 }
+export const getTopics = async (email, password) => {
+    const response = await axios.get(`${API_URL}/users/getTopics/${email}/${password}`);
+    return response;
+}
