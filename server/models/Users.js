@@ -91,10 +91,10 @@ const UserSchema = new mongoose.Schema({
       type: [courseSchema],
       default: []
     },
-    topics: {
-        type: [topicSchema],
-        default: []
-    },
+    // topics: {
+    //     type: [topicSchema],
+    //     default: []
+    // },
     offerHelp: {
         type: Boolean,
         required: true,

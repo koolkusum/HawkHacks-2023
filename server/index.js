@@ -56,6 +56,24 @@ app.get("/users/getUsers", (req, res) => {
 }
 );
 
+app.put('/users/initializeCourse/:email/:password', async(req,res) => {
+    const {email, password} = req.params;
+    const user = await UserModel.findOne({email, password}).exec();
+    if (!user)
+    {
+        return res.status(404).json({message: 'User not found'});
+    }
+    const course = {
+        name: "Data Structures",
+        instructor: "Dr. Centeno",
+        topics: [],
+        courseid: 8113
+    }
+    user.courses.push(course);
+    await user.save();
+    res.status(200).json(user);
+})
+
 app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     const {email, password} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
@@ -63,47 +81,38 @@ app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     {
         return res.status(404).json({message: 'User not found'});
     }
-    //if (courseid == "8113")
-    //{
-        const topic1 = {
-            name: "Arrays",
-            unlocked:true,
-            date: '04/30/2023 5:00 AM'
-        }
-        const topic2 = {
-            name: "Linked-Lists",
-            unlocked: false,
-            date: '09/20/2023 12:00 AM'
-        }
-        const topic3 = {
-            name: "Stacks and Queues",
-            unlocked: false,
-            date: '09/25/2023 1 2:00 AM'
-        }
-        const topic4 = {
-            name: "Hashmap and Hashset",
-            unlocked: false,
-            date: '09/27/2023 12:00 AM'
-        }
-        const topic5 = {
-            name: "Trees",
-            unlocked: false,
-            date: '10/02/2023 12:00 AM'
-        }
-        const topic6 = {
-            name: "Searching/Sorting Algorithms",
-            unlocked: false,
-            date: '10/04/2023 12:00 AM'
-        }
-        const course = {
-            name: "Data Structures",
-            instructor: "Dr. Centeno",
-            topics: [topic1, topic2, topic3, topic4, topic5, topic6],
-            courseid: 8113
-        }
-    //}
-    user.courses.push(course);
-    user.topics.push(topic1,topic2,topic3,topic4, topic5, topic6);
+    const topic1 = {
+        name: "Arrays",
+        unlocked:false,
+        date: '04/30/2023 5:00 AM'
+    }
+    const topic2 = {
+        name: "Linked-Lists",
+        unlocked: false,
+        date: '09/20/2023 12:00 AM'
+    }
+    const topic3 = {
+        name: "Stacks and Queues",
+        unlocked: false,
+        date: '09/25/2023 1 2:00 AM'
+    }
+    const topic4 = {
+        name: "Hashmap and Hashset",
+        unlocked: false,
+        date: '09/27/2023 12:00 AM'
+    }
+    const topic5 = {
+        name: "Trees",
+        unlocked: false,
+        date: '10/02/2023 12:00 AM'
+    }
+    const topic6 = {
+        name: "Searching/Sorting Algorithms",
+        unlocked: false,
+        date: '10/04/2023 12:00 AM'
+    }
+    user.courses.topics.push(topic1,topic2,topic3,topic4,topic5,topic6);
+    //user.topics.push(topic1,topic2,topic3,topic4, topic5, topic6);
     await user.save()
     res.status(200).json(user);
 });
