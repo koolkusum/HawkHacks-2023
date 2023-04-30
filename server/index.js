@@ -14,10 +14,10 @@ mongoose.connect(
     mongodb_url
 );
 
-function unlockTopics()
-{
+// function unlockTopics()
+// {
 
-}
+// }
 
 app.post("/users/createUser", async (req,res) =>{
 
@@ -66,7 +66,7 @@ app.put('/users/initializeCourse/:email/:password', async(req,res) => {
     const course = {
         name: "Data Structures",
         instructor: "Dr. Centeno",
-        topics: [],
+        //topics: [],
         courseid: 8113
     }
     user.courses.push(course);
