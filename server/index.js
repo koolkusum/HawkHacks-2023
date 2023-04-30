@@ -14,6 +14,11 @@ mongoose.connect(
     mongodb_url
 );
 
+function unlockTopics()
+{
+
+}
+
 app.post("/users/createUser", async (req,res) =>{
 
     try {
@@ -54,7 +59,7 @@ app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,re
         const topic1 = {
             name: "Arrays",
             unlocked:true,
-            date: '09/18/2023 12:00 AM'
+            date: '04/30/2023 5:00 AM'
         }
         const topic2 = {
             name: "Linked-Lists",
@@ -64,7 +69,7 @@ app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,re
         const topic3 = {
             name: "Stacks and Queues",
             unlocked: false,
-            date: '09/25/2023 12:00 AM'
+            date: '09/25/2023 1 2:00 AM'
         }
         const topic4 = {
             name: "Hashmap and Hashset",
@@ -94,28 +99,30 @@ app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,re
     res.status(200).json(user);
 });
 
-app.put("/users/unlockTopic/:email/:password/:topicname", async(req,res) => {
-    const {email, password, topicname} = req.params;
-    const user = await UserModel.findOne({email, password}).exec();
-    if (!user) {
-        return res.status(404).json({message: 'User not found'});
-    }
-    if (user.admin === true)
-    {
-        for (let i = 0; i < user.topics.length; i++)
-        {
-            let thisTopic = user.topics[i];
-            if (topicname === thisTopic)
-            {
-                thisTopic.unlocked = true;
-                await user.save();
-                res.status(200).json(user);
-            }
-        }
-        return res.status(404).json({message: 'Topic not found'});
-    }
-    return res.status(403).json({message: 'Unauthorized access'});
-});
+
+
+// app.put("/users/unlockTopic/:email/:password/:topicname", async(req,res) => {
+//     const {email, password, topicname} = req.params;
+//     const user = await UserModel.findOne({email, password}).exec();
+//     if (!user) {
+//         return res.status(404).json({message: 'User not found'});
+//     }
+//     if (user.admin === true)
+//     {
+//         for (let i = 0; i < user.topics.length; i++)
+//         {
+//             let thisTopic = user.topics[i];
+//             if (topicname === thisTopic)
+//             {
+//                 thisTopic.unlocked = true;
+//                 await user.save();
+//                 res.status(200).json(user);
+//             }
+//         }
+//         return res.status(404).json({message: 'Topic not found'});
+//     }
+//     return res.status(403).json({message: 'Unauthorized access'});
+// });
 
 // app.put("/users/rateTopic/:email/:password/:rateValue", async (req, res) => {
 //     const {email, password} = req.params;
