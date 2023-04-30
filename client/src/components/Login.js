@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {getUsers} from '../api';
+import {getUser} from '../api';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Style.css';
@@ -10,7 +10,7 @@ function Login() {
     const handleLogin = async (e) => {
       e.preventDefault();
       try {
-        const response = await getUsers(email,password);//if response status code
+        const response = await getUser(email,password);//if response status code
         sessionStorage.setItem('email', email);
         sessionStorage.setItem('password', password);
 

@@ -35,6 +35,15 @@ app.post("/users/createUser", async (req,res) =>{
 }
 );
 
+app.get("/users/getUser/:email/:password", async (req, res) => {
+    const { email, password } = req.params;
+    const user = await UserModel.findOne({ email, password }).exec();
+    if (!user) {
+      return res.status(404).json({message: "User not found or password is incorrect." });
+    }
+    res.status(200).json({user});
+});
+
 app.get("/users/getUsers", (req, res) => {
     UserModel.find({}, (err,result) => {
         if (err){
@@ -47,7 +56,7 @@ app.get("/users/getUsers", (req, res) => {
 }
 );
 
-app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,res) => {
+app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     const {email, password} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user)
@@ -95,7 +104,7 @@ app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,re
     //}
     user.courses.push(course);
     user.topics.push(topic1,topic2,topic3,topic4, topic5, topic6);
-    await(user.save);
+    await user.save()
     res.status(200).json(user);
 });
 

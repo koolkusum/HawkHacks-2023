@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { createUser} from '../api';
+import { createUser,initializeCourseTopics} from '../api';
 import { useNavigate } from 'react-router-dom';
 import './Style.css';
 function Signup() {
@@ -24,8 +24,12 @@ function Signup() {
       const response = await createUser(user);
       if (response.status===200)
       {
+        const response2 = await initializeCourseTopics(email,password);
+        if(!(response2.status)===200) {
+          console.error(response2);
+        }
+        nav('/StudentPage');
 
-        nav('/TaskPlanner');
       }
       console.log(response);
       // code to redirect the user to their dashboard goes here
