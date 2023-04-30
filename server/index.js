@@ -127,6 +127,16 @@ app.put("/users/unlockTopic/:email/:password/:topicname", async(req,res) => {
 //     res.status(200).json(user);
 // });
 
+app.get("/users/getCourseID/:email/:password", async (req, res) => {
+    const {email, password} = req.params;
+    const user = await UserModel.findOne({email, password}).exec();
+    if (!user) {
+        return res.status(404).json({message: 'User not found'});
+    }
+    const courseid = user.courses.courseid;
+    res.status(200).json(courseid);
+});
+
 
 app.get("/users/getCourse/:email/:password", async (req, res) => {
     const {email, password} = req.params;
