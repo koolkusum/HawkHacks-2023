@@ -124,8 +124,6 @@ app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     res.status(200).json(user);
 });
 
-
-
 app.put("/users/unlockTopic/:email/:password", async(req,res) => {
     const {email, password} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
@@ -144,28 +142,22 @@ app.put("/users/unlockTopic/:email/:password", async(req,res) => {
         }
         return res.status(404).json({message: 'Topic not found'});
 });
-app.put("/users/getUpdateRatings/:email/:password/:rateTopic/:rateValue",async (req,res)=>{
-    const {email, password} = req.params;
+
+app.put("/users/updateTopics/:email/:password/:rateTopic/:rateValue", async(req, res) => {
+    const {email, password, rateTopic, rateValue} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user) {
         return res.status(404).json({message: 'User not found'});
     }
+    const index = user.topics.findIndex((topic) => topic.unlocked && topic.name === rateTopic);
+    if (!index){
+        return res.status(404).json({message: 'Topic not found'});
+    }
+    user.topics[index].completed = true;
+    user.topics[index].rateValue = rateValue;
+    await user.save();
+    res.status(200).json(user);
 });
-// app.put("/users/rateTopic/:email/:password/:rateValue", async (req, res) => {
-//     const {email, password} = req.params;
-//     const user = await UserModel.findOne({email, password}).exec();
-//     if (!user) {
-//         return res.status(404).json({message: 'User not found'});
-//     }
-//     const rateValue = getElementByI
-
-//     if (user.admin != true) //only a student without admin access should be able rate a topic
-//     {
-        
-//     }
-//     await user.save();
-//     res.status(200).json(user);
-// });
 
 app.get("/users/getCourseID/:email/:password", async (req, res) => {
     const {email, password} = req.params;
