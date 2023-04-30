@@ -27,6 +27,10 @@ const topicSchema = new mongoose.Schema({
       type: Boolean,
       required: true,
       default: false,
+  }, 
+  date: {         //represents date of when the lecture is released
+    type: Date,
+    required: true,
   }
 });
 
@@ -89,11 +93,6 @@ const UserSchema = new mongoose.Schema({
     topics: {
         type: [topicSchema],
         default: []
-    },
-    admin: {
-      type: Boolean,
-      required: true,
-      default: false
     },
     offerHelp: {
         type: Boolean,
