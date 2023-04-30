@@ -47,22 +47,22 @@ app.get("/users/getUser/:email/:password", async (req, res) => {
     const { email, password } = req.params;
     const user = await UserModel.findOne({ email, password }).exec();
     if (!user) {
-      return res.status(404).json({message: "User not found or password is incorrect." });
+        return res.status(404).json({message: "User not found or password is incorrect." });
     }
     res.status(200).json({user});
 });
 
-app.get("/users/getUsers", (req, res) => {
-    UserModel.find({}, (err,result) => {
-        if (err){
-            res.status(404).json(err);
-        }
-        else{
-            res.statusCode(200).json(result);
-        }
-    });
-}
-);
+// app.get("/users/getUsers", (req, res) => {
+//     UserModel.find({}, (err,result) => {
+//         if (err){
+//             res.status(404).json(err);
+//         }
+//         else{
+//             res.statusCode(200).json(result);
+//         }
+//     });
+// }
+// );
 
 app.put('/users/initializeCourse/:email/:password', async(req,res) => {
     const {email, password} = req.params;
