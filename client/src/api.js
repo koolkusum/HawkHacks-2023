@@ -33,3 +33,8 @@ export const getTopics = async (email, password) => {
     const response = await axios.get(`${API_URL}/users/getTopics/${email}/${password}`);
     return response;
 }
+
+export const updateTopic =async(email,password, rateTopic, rateValues) => {
+    const response = await axios.put(`${API_URL}/users/updateTopic/${email}/${password}/${rateTopic}/${rateValues}`);
+    return response;
+}

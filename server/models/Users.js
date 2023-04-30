@@ -31,6 +31,9 @@ const topicSchema = new mongoose.Schema({
   date: {         //represents date of when the lecture is released
     type: Date,
     required: true,
+  },
+  offerhelp:{
+    
   }
 });
 
@@ -92,11 +95,7 @@ const UserSchema = new mongoose.Schema({
         type: [topicSchema],
         default: []
     },
-    offerHelp: {
-        type: Boolean,
-        required: true,
-        default: false
-    }
+
 });
 
 const UserModel = mongoose.model("users", UserSchema);

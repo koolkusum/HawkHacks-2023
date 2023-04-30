@@ -92,7 +92,7 @@ app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
     const topic1 = {
         name: "Arrays",
         unlocked:false,
-        date: '04/30/2023 5:00 AM'
+        date: '04/30/2023 5:00 AM',
     }
     const topic2 = {
         name: "Linked-Lists",
@@ -143,21 +143,22 @@ app.put("/users/unlockTopic/:email/:password", async(req,res) => {
         return res.status(404).json({message: 'Topic not found'});
 });
 
-app.put("/users/updateTopics/:email/:password/:rateTopic/:rateValue", async(req, res) => {
+app.put("/users/updateTopic/:email/:password/:rateTopic/:rateValue", async(req, res) => {
     const {email, password, rateTopic, rateValue} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user) {
-        return res.status(404).json({message: 'User not found'});
+      return res.status(404).json({message: 'User not found'});
     }
-    const index = user.topics.findIndex((topic) => topic.unlocked && topic.name === rateTopic);
-    if (!index){
-        return res.status(404).json({message: 'Topic not found'});
-    }
-    user.topics[index].completed = true;
-    user.topics[index].rateValue = rateValue;
+    const index = user.topics.find((topic) =>topic.name === rateTopic);
+
+    index.rateValue = Number(rateValue)
+    index.completed=true
+    // user.topics[index].completed = true;
+    // user.topics[index].rateValue = Number(rateValue); // convert rateValue to a number
     await user.save();
     res.status(200).json(user);
-});
+  });
+  
 
 app.get("/users/getCourseID/:email/:password", async (req, res) => {
     const {email, password} = req.params;
