@@ -24,3 +24,8 @@ export const getUser = async(email,password)=>{
     const response = await axios.get(`${API_URL}/users/getUser/${email}/${password}`);
     return response;
 }
+export const intializeCourse = async (email, password)=>
+{
+    const response = await axios.put(`${API_URL}/users/getUser/${email}/${password}`);
+    return response;
+}
