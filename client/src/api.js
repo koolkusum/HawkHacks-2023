@@ -12,7 +12,7 @@ export const getUsers = async(email,password)=>{
 
 
 export const initializeCourseTopics = async (email, password) => {
-    const response = await axios.put(`${API_URL}/users/intializeCourse/${email}/${password}`);
+    const response = await axios.put(`${API_URL}/users/initializeCourseTopics/${email}/${password}`);
     return response;
 }
 
@@ -24,8 +24,8 @@ export const getUser = async(email,password)=>{
     const response = await axios.get(`${API_URL}/users/getUser/${email}/${password}`);
     return response;
 }
-export const intializeCourse = async (email, password)=>
+export const initializeCourse = async (email, password)=>
 {
-    const response = await axios.put(`${API_URL}/users/getUser/${email}/${password}`);
+    const response = await axios.put(`${API_URL}/users/initializeCourse/${email}/${password}`);
     return response;
 }
