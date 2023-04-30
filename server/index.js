@@ -182,7 +182,7 @@ app.get("/users/getCourse/:email/:password", async (req, res) => {
 });
 
 app.get("/users/getTopics/:email/:password", async (req, res) => {
-    const {email, password, courseid} = req.params;
+    const {email, password} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user) {
         return res.status(404).json({message: 'User not found'});
