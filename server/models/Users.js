@@ -1,6 +1,32 @@
 
 const mongoose = require('mongoose')
 
+const tutorSchema = new mongoose.Schema({
+  tutorName: {
+    type: String,
+    required: true,
+    minlength: 1, 
+    maxlength: 40
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function(v) {
+        return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
+      },
+      message: props =>`${props.value} is not a valid email.`  
+    }
+  },
+  topic: {
+    type: String,
+    required: true,
+    minlength: 1,
+    maxlength: 40
+  },
+});
+
 const topicSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -33,7 +59,9 @@ const topicSchema = new mongoose.Schema({
     required: true,
   },
   offerhelp:{
-    
+    type: Boolean,
+    required: true,
+    default: false,
   }
 });
 
@@ -50,7 +78,6 @@ const courseSchema = new mongoose.Schema({
         minlength: 1,
         maxlength: 40
     },
-
     courseRating: {
         type: Number, //average of (topic1rating + topic2rating + ....) / # of topics
         required: true,

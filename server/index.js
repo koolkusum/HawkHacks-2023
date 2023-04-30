@@ -26,7 +26,6 @@ function checkDate(datetime)
     }
 };
 
-
 app.post("/users/createUser", async (req,res) =>{
 
     try {
@@ -158,9 +157,28 @@ app.put("/users/updateTopic/:email/:password/:rateTopic/:rateValue", async(req, 
     await user.save();
     res.status(200).json(user);
   });
-  
 
-app.get("/users/getCourseID/:email/:password", async (req, res) => {
+app.put("/users/offerHelp/:email/:password/:rateTopic/:offerHelp", async(req, res) => {
+    const {email, password, rateTopic, offerHelp} = req.params;
+    const user = await UserModel.findOne({email, password}).exec();
+    if (!user) {
+      return res.status(404).json({message: 'User not found'});
+    }
+    const index = user.topics.find((topic) =>topic.name === rateTopic);
+    if (offerHelp === true)
+    {
+        const tutor1 = {
+            tutorName: user.name,
+            email: email,
+            topic: index.name
+        }
+        tutors.push(tutor1)
+    }
+    await user.save();
+    res.status(200).json(user);
+  });
+
+  app.get("/users/getCourseID/:email/:password", async (req, res) => {
     const {email, password} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user) {
