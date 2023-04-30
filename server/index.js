@@ -49,7 +49,7 @@ app.put('/users/initializeCourseTopics/:email/:password/:courseid', async(req,re
     {
         return res.status(404).json({message: 'User not found'});
     }
-    if (courseid == 8113)
+    if (courseid == "8113")
     {
         const topic1 = {
             name: "Arrays",
@@ -94,44 +94,38 @@ app.put("/users/unlockTopic/:email/:password/:topicname", async(req,res) => {
     if (!user) {
         return res.status(404).json({message: 'User not found'});
     }
-    if (user.admin == true)
+    if (user.admin === true)
     {
-        for (let i = 0; i < 6; i++)
+        for (let i = 0; i < user.topics.length; i++)
         {
-            thistopic = users.topics.shift();
-            if (topicname === thistopic)
+            let thisTopic = user.topics[i];
+            if (topicname === thisTopic)
             {
-                thistopic.unlocked = true;
+                thisTopic.unlocked = true;
+                await user.save();
+                res.status(200).json(user);
             }
-            break;
         }
+        return res.status(404).json({message: 'Topic not found'});
     }
-    //do we really need an else?
-    await user.save();
-    res.status(200).json(user);
-})
-
-app.put("/users/rateTopic/:email/:password", async (req, res) => {
-    const {email, password, topicname} = req.params;
-    const user = await UserModel.findOne({email, password}).exec();
-    if (!user) {
-        return res.status(404).json({message: 'User not found'});
-    }
-    if (user.admin != true) //only a student without admin access should be able rate a topic
-    {
-        for (let i = 0; i < 6; i++)
-        {
-            thistopic = users.topics.shift();
-            if (topicname === thistopic)
-            {
-                thistopic.unlocked = true;
-            }
-            break;
-        }
-    }
-    await user.save();
-    res.status(200).json(user);
+    return res.status(403).json({message: 'Unauthorized access'});
 });
+
+// app.put("/users/rateTopic/:email/:password/:rateValue", async (req, res) => {
+//     const {email, password} = req.params;
+//     const user = await UserModel.findOne({email, password}).exec();
+//     if (!user) {
+//         return res.status(404).json({message: 'User not found'});
+//     }
+//     const rateValue = getElementByI
+
+//     if (user.admin != true) //only a student without admin access should be able rate a topic
+//     {
+        
+//     }
+//     await user.save();
+//     res.status(200).json(user);
+// });
 
 
 app.get("/users/getCourse/:email/:password", async (req, res) => {
@@ -154,6 +148,8 @@ app.get("/users/getTopics/:email/:password", async (req, res) => {
     res.status(200).json(topics);
 });
 
-
+app.listen(port, () => {
+    console.log("SERVER RUNS")
+});
 
 
