@@ -14,10 +14,18 @@ mongoose.connect(
     mongodb_url
 );
 
-// function unlockTopics()
-// {
+function checkDate(datetime)
+{
+    const now = new Date();
+    const unlockDate = new Date(datetime);
+    if (now.getTime() === unlockDate.getTime()) {
+      return true;
+    } 
+    else {
+      return false;
+    }
+};
 
-// }
 
 app.post("/users/createUser", async (req,res) =>{
 
@@ -111,7 +119,7 @@ app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
         unlocked: false,
         date: '10/04/2023 12:00 AM'
     }
-    user.courses.topics.push(topic1,topic2,topic3,topic4,topic5,topic6);
+    user.courses[0].topics.push(topic1,topic2,topic3,topic4,topic5,topic6);
     //user.topics.push(topic1,topic2,topic3,topic4, topic5, topic6);
     await user.save()
     res.status(200).json(user);
@@ -119,28 +127,24 @@ app.put('/users/initializeCourseTopics/:email/:password', async(req,res) => {
 
 
 
-// app.put("/users/unlockTopic/:email/:password/:topicname", async(req,res) => {
-//     const {email, password, topicname} = req.params;
-//     const user = await UserModel.findOne({email, password}).exec();
-//     if (!user) {
-//         return res.status(404).json({message: 'User not found'});
-//     }
-//     if (user.admin === true)
-//     {
-//         for (let i = 0; i < user.topics.length; i++)
-//         {
-//             let thisTopic = user.topics[i];
-//             if (topicname === thisTopic)
-//             {
-//                 thisTopic.unlocked = true;
-//                 await user.save();
-//                 res.status(200).json(user);
-//             }
-//         }
-//         return res.status(404).json({message: 'Topic not found'});
-//     }
-//     return res.status(403).json({message: 'Unauthorized access'});
-// });
+app.put("/users/unlockTopic/:email/:password", async(req,res) => {
+    const {email, password} = req.params;
+    const user = await UserModel.findOne({email, password}).exec();
+    if (!user) {
+        return res.status(404).json({message: 'User not found'});
+    }
+    for (let i = 0; i < user.topics.length; i++)
+    {
+        let thisTopic = user.courses[0].topics[i];
+        if (checkDate(thisTopic.date) === true)
+        {
+            thisTopic.unlocked = true;
+            await user.save();
+            res.status(200).json(user);
+            }
+        }
+        return res.status(404).json({message: 'Topic not found'});
+});
 
 // app.put("/users/rateTopic/:email/:password/:rateValue", async (req, res) => {
 //     const {email, password} = req.params;
@@ -164,7 +168,7 @@ app.get("/users/getCourseID/:email/:password", async (req, res) => {
     if (!user) {
         return res.status(404).json({message: 'User not found'});
     }
-    const courseid = user.courses.courseid;
+    const courseid = user.courses[0].courseid;
     res.status(200).json(courseid);
 });
 
@@ -184,7 +188,7 @@ app.get("/users/getTopics/:email/:password", async (req, res) => {
     if (!user) {
         return res.status(404).json({message: 'User not found'});
     }
-    const topics = user.courses.topics;
+    const topics = user.courses[0].topics;
     res.status(200).json(topics);
 });
 
