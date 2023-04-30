@@ -38,3 +38,7 @@ export const updateTopic =async(email,password, rateTopic, rateValues) => {
     const response = await axios.put(`${API_URL}/users/updateTopic/${email}/${password}/${rateTopic}/${rateValues}`);
     return response;
 }
+export const offerHelp = async (email,password,rateTopic)=> {
+    const response = await axios.put(`${API_URL}/users/offerHelp/${email}/${password}/${rateTopic}`);
+    return response;
+}

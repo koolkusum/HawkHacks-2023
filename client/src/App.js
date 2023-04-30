@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from './components/Signup';
 import Login from './components/Login';
 import StudentPage from './components/StudentPage';
+import './PixelArtBackground.css';
 
 function App() {
   return (

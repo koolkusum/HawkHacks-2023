@@ -51,17 +51,17 @@ app.get("/users/getUser/:email/:password", async (req, res) => {
     res.status(200).json({user});
 });
 
-// app.get("/users/getUsers", (req, res) => {
-//     UserModel.find({}, (err,result) => {
-//         if (err){
-//             res.status(404).json(err);
-//         }
-//         else{
-//             res.statusCode(200).json(result);
-//         }
-//     });
-// }
-// );
+app.get("/users/getUsers", (req, res) => {
+    UserModel.find({}, (err,result) => {
+        if (err){
+            res.status(404).json(err);
+        }
+        else{
+            res.statusCode(200).json(result);
+        }
+    });
+}
+);
 
 app.put('/users/initializeCourse/:email/:password', async(req,res) => {
     const {email, password} = req.params;
@@ -158,22 +158,14 @@ app.put("/users/updateTopic/:email/:password/:rateTopic/:rateValue", async(req, 
     res.status(200).json(user);
   });
 
-app.put("/users/offerHelp/:email/:password/:rateTopic/:offerHelp", async(req, res) => {
-    const {email, password, rateTopic, offerHelp} = req.params;
+app.put("/users/offerHelp/:email/:password/:rateTopic", async(req, res) => {
+    const {email, password, rateTopic} = req.params;
     const user = await UserModel.findOne({email, password}).exec();
     if (!user) {
       return res.status(404).json({message: 'User not found'});
     }
     const index = user.topics.find((topic) =>topic.name === rateTopic);
-    if (offerHelp === true)
-    {
-        const tutor1 = {
-            tutorName: user.name,
-            email: email,
-            topic: index.name
-        }
-        tutors.push(tutor1)
-    }
+    index.offerhelp=true
     await user.save();
     res.status(200).json(user);
   });
