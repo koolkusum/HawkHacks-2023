@@ -61,7 +61,7 @@ const handleOfferHelp = async (topicName) => {
     <div style={{  padding: '20px' }}>
     <a href="/Login" id="logout-btn">Logout</a>
     <h1>Hello Student</h1>
-    <h2 style={{ color: 'white', fontSize: '40px', paddingLeft: '610px' }}>My Courses:</h2>
+    <h2 style={{ color: 'white', fontSize: '40px', paddingLeft: '820px' }}>My Courses:</h2>
     {completedCourses.map(course => (
         <div key={course._id} style={{ maxWidth: '600px', backgroundColor: 'white', margin: '20px auto', padding: '20px' }}>
             <h3 style={{ fontSize: '34px', color: '#333', paddingLeft: '190px' }}>{course.name}</h3>
