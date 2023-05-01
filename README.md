@@ -5,7 +5,7 @@ Hackathon at Montclair University
 
 The solution is something that's been there all along: creating a community for and by students, polling student understanding of a course lecture by lecture, topic by topic, and an extra-credit scheme to incentivize students to help each other. And so, we present: MyLecturePal. 
 
-## What it doe
+## What it does
        MyLecturePal is a web application that allows a user (student) to sign in with their name, email, and  a password. Using a course ID, the user's list of courses and topics are immediately initialized upon setup. After signing in, the student's home page is displayed, with their courses, and topics underneath. After a lecture has been given, its corresponding topic is unlocked for rating. A student can rate the lecture from 1 to 5 based on their understanding. A student who rates the lecture highly is displayed a button called "Offer Help" to agree to help other students (with notes, answering questions, etc.), while a student who rates the lecture poorly is provided with a list of students' names and emails who have agreed to offer help. 
 
 ## How we built it
