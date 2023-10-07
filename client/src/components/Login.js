@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {getUser} from '../api';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import './Style.css';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +15,7 @@ function Login() {
 
         if (response.status===200)
         {
-          nav('/StudentPage');
+          nav('/Post');
         }
         //console.log(response); // do something with the user data, like redirect to a new page
       } catch (error) {
